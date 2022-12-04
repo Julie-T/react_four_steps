@@ -26,13 +26,19 @@ const Steps = (props) => {
     e.preventDefault();
     const obj = {
       distance: distance,
-      date: date,
+      date: new Date(date),
       id: nanoid(),
     };
-    setChart([...chart, obj]);
+    const arr = [...chart, obj];
+    arr.sort(function(a,b){
+        return new Date(b.date) - new Date(a.date);
+      });
+    setChart(arr);
     setDistance('');
     setDate('');
     console.log(chart);
+
+
   };
 
   const removeElem = (id) => {
