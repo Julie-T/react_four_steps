@@ -25,7 +25,8 @@ ElemOfChart.propTypes = {
         distance: PropTypes.string, 
         date: PropTypes.object, 
         id: PropTypes.string, 
-        inputDate: PropTypes.string})),
+        inputDate: PropTypes.string
+    })),
     remove: PropTypes.func.isRequired,
     edit: PropTypes.func.isRequired,
 };
