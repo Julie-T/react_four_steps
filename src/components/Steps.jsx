@@ -5,8 +5,8 @@ import { nanoid } from "nanoid";
 
 const Steps = (props) => {
   const [chart, setChart] = useState([]);
-  const [date, setDate] = useState("");
-  const [distance, setDistance] = useState("");
+  const [date, setDate] = useState('');
+  const [distance, setDistance] = useState('');
 
   const handleDateDistanceSubmit = (e) => {
     e.preventDefault();
@@ -28,17 +28,14 @@ const Steps = (props) => {
       distance: distance,
       date: new Date(date),
       id: nanoid(),
+      inputDate: date
     };
     const arr = [...chart, obj];
-    arr.sort(function(a,b){
-        return new Date(b.date) - new Date(a.date);
-      });
+    arr.sort((a,b) => new Date(b.date) - new Date(a.date));
     setChart(arr);
     setDistance('');
     setDate('');
     console.log(chart);
-
-
   };
 
   const removeElem = (id) => {
@@ -47,10 +44,9 @@ const Steps = (props) => {
 
   const editElem = (id) => {
     const editObj = chart.find(elem => elem.id === id);
-    setDate(editObj.date)
+    setDate(editObj.inputDate)
     setDistance(editObj.distance)
     setChart(chart.filter((elem) => elem.id !== id));
-    
   };
 
   return (
