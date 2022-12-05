@@ -32,13 +32,18 @@ const Steps = () => {
     };
 
     console.log(chart);
-
-    if(chart.includes(elem => elem.date.getTime() === obj.date.getTime())) {
-        let unique = chart.find(elem => elem.date === obj.date)
-        unique.distance = unique.distance + obj.distance;
+    const currentObject = chart.find(item => item.date.getTime() === obj.date.getTime())
+    console.log(currentObject)
+    if(chart.includes(currentObject)) {
+        console.log("wow")
         const arrUnique = [...chart];
+        arrUnique.map(item => {
+            if (item.date.getTime() === obj.date.getTime()) {
+                item.distance = Number(item.distance) + Number(obj.distance)
+            }
+            // return item
+        })
         arrUnique.sort((a,b) => new Date(b.date) - new Date(a.date));
-        setChart(arrUnique);
     } else {
         console.log('---')
         const arr = [...chart, obj];
@@ -64,7 +69,7 @@ const Steps = () => {
   return (
     <div className='container'>
       <form
-        className="date-diistance-form"
+        className="date-distance-form"
         onSubmit={(e) => handleDateDistanceSubmit(e)}
       >
       <div className='wrapper'>
@@ -89,13 +94,18 @@ const Steps = () => {
           onChange={(e) => handleDistance(e)}
         />
       </div>
-      {/* <div> */}
+      <div className='wrapper-button'>
+        <div className='title'></div>
         <button className='button' 
         onClick={(e) => handleSubmit(e)}>OK</button>
-      {/* </div> */}
-        
+      </div>
       </form>
       <div>
+      <div className='title-chart'>
+        <div className='title'>Дата (ДД.ММ.ГГ)</div>
+        <div className='title'>Пройдено км</div>
+        <div className='title'>Действия</div>
+      </div>
         <ElemOfChart items={chart} remove={removeElem} edit={editElem} />
       </div>
     </div>
