@@ -17,8 +17,8 @@ const ElemOfChart = (props) => {
             </div>
             <div className='distance'>{item.distance}</div>
             <div className='icons'>
-            <RxPencil1 className='btn-edit' onClick={() => props.edit(item.id)}/>
-            <MdDisabledByDefault className='btn-rmv' onClick={() => props.remove(item.id)}/>
+                <RxPencil1 className='btn-edit' onClick={() => props.edit(item.id)}/>
+                <MdDisabledByDefault className='btn-rmv' onClick={() => props.remove(item.id)}/>
             </div>
         </div>))
       }

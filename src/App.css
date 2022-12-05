@@ -83,4 +83,5 @@
 
 .icons {
   display: flex;
+  align-self: center;
 }
