@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import PropTypes from "prop-types";
 import ElemOfChart from "./ElemOfChart";
 import { nanoid } from "nanoid";
+import '../App.css'
 
-const Steps = (props) => {
+const Steps = () => {
   const [chart, setChart] = useState([]);
   const [date, setDate] = useState('');
   const [distance, setDistance] = useState('');
@@ -30,12 +30,24 @@ const Steps = (props) => {
       id: nanoid(),
       inputDate: date
     };
-    const arr = [...chart, obj];
-    arr.sort((a,b) => new Date(b.date) - new Date(a.date));
-    setChart(arr);
+
+    console.log(chart);
+
+    if(chart.includes(elem => elem.date.getTime() === obj.date.getTime())) {
+        let unique = chart.find(elem => elem.date === obj.date)
+        unique.distance = unique.distance + obj.distance;
+        const arrUnique = [...chart];
+        arrUnique.sort((a,b) => new Date(b.date) - new Date(a.date));
+        setChart(arrUnique);
+    } else {
+        console.log('---')
+        const arr = [...chart, obj];
+        arr.sort((a,b) => new Date(b.date) - new Date(a.date));
+        setChart(arr);
+    }
+    
     setDistance('');
     setDate('');
-    console.log(chart);
   };
 
   const removeElem = (id) => {
@@ -50,12 +62,14 @@ const Steps = (props) => {
   };
 
   return (
-    <div>
+    <div className='container'>
       <form
         className="date-diistance-form"
         onSubmit={(e) => handleDateDistanceSubmit(e)}
       >
-        <input
+      <div className='wrapper'>
+        <div className='title'>Дата (ДД.ММ.ГГ)</div>
+        <input className='date'
           type="date"
           id="date"
           name="date"
@@ -63,7 +77,10 @@ const Steps = (props) => {
           onChange={(e) => handleDate(e)}
           maxLength="8"
         />
-        <input
+      </div>
+      <div className='wrapper'>
+      <div className='title'>Пройдено км</div>
+        <input className='distance'
           placeholder="км"
           type="number"
           id="distance"
@@ -71,13 +88,18 @@ const Steps = (props) => {
           value={distance}
           onChange={(e) => handleDistance(e)}
         />
-        <button onClick={(e) => handleSubmit(e)}>OK</button>
+      </div>
+      {/* <div> */}
+        <button className='button' 
+        onClick={(e) => handleSubmit(e)}>OK</button>
+      {/* </div> */}
+        
       </form>
-      <ElemOfChart items={chart} remove={removeElem} edit={editElem} />
+      <div>
+        <ElemOfChart items={chart} remove={removeElem} edit={editElem} />
+      </div>
     </div>
   );
 };
-
-Steps.propTypes = {};
 
 export default Steps;
